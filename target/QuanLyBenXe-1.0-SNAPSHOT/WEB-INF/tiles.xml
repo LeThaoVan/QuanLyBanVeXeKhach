@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache
+Software Foundation//DTD Tiles Configuration 3.0//EN"
+"http://tiles.apache.org/dtds/tiles-config_3_0.uav">
+<tiles-definitions>
+    <definition name="baseLayout"
+                template="/WEB-INF/layout/base.jsp">
+        <put-attribute name="title" value="" />
+        <put-attribute name="header"
+                       value="/WEB-INF/layout/header.jsp" />
+        <put-attribute name="content" value="" />
+        <put-attribute name="footer"
+                       value="/WEB-INF/layout/footer.jsp" />
+    </definition>
+    <definition name="index" extends="baseLayout">
+        <put-attribute name="title" value="Trang chủ" />
+        <put-attribute name="content"
+                       value="/WEB-INF/jsp/index.jsp" />
+    </definition>
+    
+    <definition name="buses" extends="baseLayout">
+        <put-attribute name="title" value="Thêm chuyến xe" />
+        <put-attribute name="content"
+                       value="/WEB-INF/jsp/buses.jsp" />
+    </definition>
+    
+     <definition name="routebuses" extends="baseLayout">
+        <put-attribute name="title" value="Thêm tuyến xe cho chuyến" />
+        <put-attribute name="content"
+                       value="/WEB-INF/jsp/routebuses.jsp" />
+    </definition>
+    
+    <definition name="listbuses" extends="baseLayout">
+        <put-attribute name="title" value="Danh sách xe khách" />
+        <put-attribute name="content"
+                       value="/WEB-INF/jsp/listbuses.jsp" />
+    </definition>
+    
+     <definition name="route-details" extends="baseLayout">
+        <put-attribute name="title" value="Dat ve xe" />
+        <put-attribute name="content" value="/WEB-INF/jsp/route-details.jsp" />
+    </definition>
+    
+     <definition name="tram" extends="baseLayout">
+        <put-attribute name="title" value="Thêm trạm" />
+        <put-attribute name="content" value="/WEB-INF/jsp/tram.jsp" />
+    </definition>
+    
+    <definition name="routestation" extends="baseLayout">
+        <put-attribute name="title" value="Thêm trạm cho tuyến đường" />
+        <put-attribute name="content" value="/WEB-INF/jsp/routestation.jsp" />
+    </definition>
+    
+    <definition name="sole-ticket" extends="baseLayout">
+        <put-attribute name="title" value="Dat ve" />
+        <put-attribute name="content" value="/WEB-INF/jsp/sole-ticket.jsp" />
+    </definition>
+    <definition name="stats" extends="baseLayout">
+        <put-attribute name="title" value="Thống kê" />
+        <put-attribute name="content"
+                       value="/WEB-INF/jsp/stats.jsp" />
+    </definition>
+    
+    <definition name="login" extends="baseLayout">
+        <put-attribute name="title" value="Dang nhap" />
+        <put-attribute name="content" value="/WEB-INF/jsp/login.jsp" />
+    </definition>
+    
+    <definition name="register" extends="baseLayout">
+        <put-attribute name="title" value="Dang ky" />
+        <put-attribute name="content" value="/WEB-INF/jsp/register.jsp" />
+    </definition>
+      <definition name="users" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý người dùng" />
+        <put-attribute name="content" value="/WEB-INF/jsp/users.jsp" />
+    </definition>
+    
+    <definition name="pay" extends="baseLayout">
+        <put-attribute name="title" value="Thanh toan" />
+        <put-attribute name="content" value="/WEB-INF/jsp/pay.jsp" />
+    </definition>
+    
+     <definition name="huongdanpay" extends="baseLayout">
+        <put-attribute name="title" value="Hướng dẫn thanh toán" />
+        <put-attribute name="content" value="/WEB-INF/jsp/huongdanpay.jsp" />
+    </definition>
+    
+    <definition name="admin-ticket" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý bán vé" />
+        <put-attribute name="content" value="/WEB-INF/jsp/admin-ticket.jsp" />
+    </definition>
+</tiles-definitions>
