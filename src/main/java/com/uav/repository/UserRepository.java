@@ -4,7 +4,7 @@
  */
 package com.uav.repository;
 
-import com.uav.pojo.Users;
+import com.uav.pojo.User;
 import java.util.List;
 
 /**
@@ -12,10 +12,9 @@ import java.util.List;
  * @author pc
  */
 public interface UserRepository {
-    List<Users> getUsers();
-    
-    boolean addUser(Users user);
-    List<Users> getUser (String username);
+    List<User> getUsers();
+//    boolean addUser(User user);
+    List<User> getUser (String username);
     boolean deleteUsers(int id);
     boolean updateUser(int id, String newrode);
 }

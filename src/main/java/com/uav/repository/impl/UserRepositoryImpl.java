@@ -4,7 +4,7 @@
  */
 package com.uav.repository.impl;
 
-import com.uav.pojo.Users;
+import com.uav.pojo.User;
 import com.uav.repository.UserRepository;
 import java.util.List;
 import javax.ejb.LocalBean;
@@ -41,37 +41,37 @@ public class UserRepositoryImpl implements UserRepository {
     private LocalSessionFactoryBean sessionFactory;
 
     @Override
-    public List<Users> getUsers() {
+    public List<User> getUsers() {
         Session session = this.sessionFactory.getObject().getCurrentSession();
-        Query q = session.createQuery("FROM Users");
+        Query q = session.createQuery("FROM User");
 
         return q.getResultList();
     }
 
-    @Override
-    public boolean addUser(Users user) {
-        Session session = this.sessionFactory.getObject().getCurrentSession();
-        try {
-            session.save(user);
-            return true;
-        } catch (HibernateException ex) {
-            System.err.println("===========" + ex.getMessage());
-            ex.printStackTrace();
-            return false;
-        }
-    }
+//    @Override
+//    public boolean addUser(User user) {
+//        Session session = this.sessionFactory.getObject().getCurrentSession();
+//        try {
+//            session.save(user);
+//            return true;
+//        } catch (HibernateException ex) {
+//            System.err.println("===========" + ex.getMessage());
+//            ex.printStackTrace();
+//            return false;
+//        }
+//    }
 
     @Override
-    public List<Users> getUser(String username) {
+    public List<User> getUser(String username) {
         Session session = this.sessionFactory.getObject().getCurrentSession();
 
         CriteriaBuilder b = session.getCriteriaBuilder();
-        CriteriaQuery<Users> q = b.createQuery(Users.class);
-        Root root = q.from(Users.class);
+        CriteriaQuery<User> q = b.createQuery(User.class);
+        Root root = q.from(User.class);
         q.select(root);
 
         if (!username.isEmpty()) {
-            Predicate p = b.equal(root.get("username"), username.trim());
+            Predicate p = b.equal(root.get("userName"), username.trim());
             q = q.where(p);
         }
 
@@ -85,7 +85,7 @@ public class UserRepositoryImpl implements UserRepository {
         Session session = this.sessionFactory.getObject().getCurrentSession();
 
         try {
-            Users p = session.get(Users.class, id);
+            User p = session.get(User.class, id);
             session.delete(p);
 
             return true;
@@ -101,11 +101,11 @@ public class UserRepositoryImpl implements UserRepository {
             Session session = this.sessionFactory.getObject().getCurrentSession();
             CriteriaBuilder b = session.getCriteriaBuilder();
 
-            CriteriaUpdate<Users> update = b.createCriteriaUpdate(Users.class);
-            Root users = update.from(Users.class);
+            CriteriaUpdate<User> update = b.createCriteriaUpdate(User.class);
+            Root users = update.from(User.class);
 
-            update.set("rode", newrode);
-            update.where(b.equal(users.get("userid"), id));
+            update.set("role", newrode);
+            update.where(b.equal(users.get("id"), id));
             int query = session.createQuery(update).executeUpdate();
             return true;
 

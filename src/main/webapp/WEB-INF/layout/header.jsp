@@ -7,7 +7,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+<link rel="stylesheet" media="all" href="css/admin.css"/>
+
+<!--<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="javascript:void(0)">Quản lý bán vé xe khách</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
@@ -56,5 +58,17 @@
         </div>
     </div>
 
+</nav>-->
+<nav>
+    <ul>
+<!--        <li class="logo"><img src="https://i.imgur.com/E26Pj54.png"></li>-->
+        <li><a href="#"><i class="fa fa-home"></i>&nbsp; Home</a></li>
+        <li><a href="<c:url value="/admin/users"/>"><i class="fa fa-book"></i>&nbsp;  Quản lý người dùng</a></li>
+        <li><a href="#"><i class="fa fa-map-location"></i>&nbsp;  Quản lý tuyến xe</a></li>
+        <li><a href="#"><i class="fa fa-bus"></i>&nbsp;  Quản lý chuyến xe</a></li>
+        <li><a href="#"><i class="fa fa-ticket"></i>&nbsp;  Quản lý vé xe</a></li>
+        <li><a href="#"><i class="fa fa-chart-simple"></i>&nbsp;  Thống kê</a></li>
+        <li><a href="#"><i class="fa fa-phone"></i>&nbsp; Contact</a></li>
+    </ul>
 </nav>
 

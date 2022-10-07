@@ -17,13 +17,13 @@ public class RouteFormatter implements Formatter<Route> {
 
     @Override
     public String print(Route t, Locale locale) {
-        return String.valueOf(t.getRid());
+        return String.valueOf(t.getId());
     }
 
     @Override
     public Route parse(String id, Locale locale) throws ParseException {
         Route c = new Route();
-        c.setRid(Integer.parseInt(id));
+        c.setId(Integer.parseInt(id));
         
         return c;
     }

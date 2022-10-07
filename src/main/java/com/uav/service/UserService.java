@@ -4,7 +4,7 @@
  */
 package com.uav.service;
 
-import com.uav.pojo.Users;
+import com.uav.pojo.User;
 import java.util.List;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -13,10 +13,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
  * @author pc
  */
 public interface UserService extends UserDetailsService {
-    List<Users> getUsers();
+    List<User> getUsers();
     
-    boolean addUser(Users user);
-    List<Users> getUser (String username);
+    //boolean addUser(User user);
+    List<User> getUser (String username);
     boolean deleteUsers(int id);
     boolean updateUser(int id, String newrode);
 }

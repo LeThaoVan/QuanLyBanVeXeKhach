@@ -5,6 +5,7 @@
 package com.uav.pojo;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,10 +16,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -31,8 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Ward.findAll", query = "SELECT w FROM Ward w"),
     @NamedQuery(name = "Ward.findById", query = "SELECT w FROM Ward w WHERE w.id = :id"),
     @NamedQuery(name = "Ward.findByName", query = "SELECT w FROM Ward w WHERE w.name = :name"),
-    @NamedQuery(name = "Ward.findByPrefix", query = "SELECT w FROM Ward w WHERE w.prefix = :prefix"),
-    @NamedQuery(name = "Ward.findByProvinceId", query = "SELECT w FROM Ward w WHERE w.provinceId = :provinceId")})
+    @NamedQuery(name = "Ward.findByPrefix", query = "SELECT w FROM Ward w WHERE w.prefix = :prefix")})
 public class Ward implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -49,11 +51,14 @@ public class Ward implements Serializable {
     @Size(max = 20)
     @Column(name = "_prefix")
     private String prefix;
-    @Column(name = "_province_id")
-    private Integer provinceId;
     @JoinColumn(name = "_district_id", referencedColumnName = "id")
     @ManyToOne
     private District districtId;
+    @JoinColumn(name = "_province_id", referencedColumnName = "id")
+    @ManyToOne
+    private Province provinceId;
+    @OneToMany(mappedBy = "wardId")
+    private Collection<Station> stationCollection;
 
     public Ward() {
     }
@@ -91,20 +96,29 @@ public class Ward implements Serializable {
         this.prefix = prefix;
     }
 
-    public Integer getProvinceId() {
-        return provinceId;
-    }
-
-    public void setProvinceId(Integer provinceId) {
-        this.provinceId = provinceId;
-    }
-
     public District getDistrictId() {
         return districtId;
     }
 
     public void setDistrictId(District districtId) {
         this.districtId = districtId;
+    }
+
+    public Province getProvinceId() {
+        return provinceId;
+    }
+
+    public void setProvinceId(Province provinceId) {
+        this.provinceId = provinceId;
+    }
+
+    @XmlTransient
+    public Collection<Station> getStationCollection() {
+        return stationCollection;
+    }
+
+    public void setStationCollection(Collection<Station> stationCollection) {
+        this.stationCollection = stationCollection;
     }
 
     @Override

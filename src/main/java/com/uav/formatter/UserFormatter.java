@@ -4,7 +4,7 @@
  */
 package com.uav.formatter;
 
-import com.uav.pojo.Users;
+import com.uav.pojo.User;
 import java.text.ParseException;
 import java.util.Locale;
 import org.springframework.format.Formatter;
@@ -13,17 +13,17 @@ import org.springframework.format.Formatter;
  *
  * @author pc
  */
-public class UserFormatter implements Formatter<Users>{
+public class UserFormatter implements Formatter<User>{
 
     @Override
-    public String print(Users t, Locale locale) {
-        return String.valueOf(t.getUserid());   
+    public String print(User t, Locale locale) {
+        return String.valueOf(t.getId());   
     }
 
     @Override
-    public Users parse(String id, Locale locale) throws ParseException {
-        Users c = new Users();
-        c.setUserid(Integer.parseInt(id));
+    public User parse(String id, Locale locale) throws ParseException {
+        User c = new User();
+        c.setId(Integer.parseInt(id));
         
         return c;   }
     

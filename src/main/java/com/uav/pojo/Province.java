@@ -7,7 +7,6 @@ package com.uav.pojo;
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -47,10 +46,8 @@ public class Province implements Serializable {
     @Size(max = 20)
     @Column(name = "_code")
     private String code;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "destination")
-    private Collection<Route> routeCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "startingpoint")
-    private Collection<Route> routeCollection1;
+    @OneToMany(mappedBy = "provinceId")
+    private Collection<Ward> wardCollection;
     @OneToMany(mappedBy = "provinceId")
     private Collection<District> districtCollection;
 
@@ -86,21 +83,12 @@ public class Province implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Route> getRouteCollection() {
-        return routeCollection;
+    public Collection<Ward> getWardCollection() {
+        return wardCollection;
     }
 
-    public void setRouteCollection(Collection<Route> routeCollection) {
-        this.routeCollection = routeCollection;
-    }
-
-    @XmlTransient
-    public Collection<Route> getRouteCollection1() {
-        return routeCollection1;
-    }
-
-    public void setRouteCollection1(Collection<Route> routeCollection1) {
-        this.routeCollection1 = routeCollection1;
+    public void setWardCollection(Collection<Ward> wardCollection) {
+        this.wardCollection = wardCollection;
     }
 
     @XmlTransient

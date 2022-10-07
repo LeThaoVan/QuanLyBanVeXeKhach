@@ -9,7 +9,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +22,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -37,97 +35,67 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Buses.findAll", query = "SELECT b FROM Buses b"),
-    @NamedQuery(name = "Buses.findByBid", query = "SELECT b FROM Buses b WHERE b.bid = :bid"),
-    @NamedQuery(name = "Buses.findByBusesName", query = "SELECT b FROM Buses b WHERE b.busesName = :busesName"),
-    @NamedQuery(name = "Buses.findByDriverID", query = "SELECT b FROM Buses b WHERE b.driverID = :driverID"),
-    @NamedQuery(name = "Buses.findByBstatus", query = "SELECT b FROM Buses b WHERE b.bstatus = :bstatus"),
+    @NamedQuery(name = "Buses.findById", query = "SELECT b FROM Buses b WHERE b.id = :id"),
+    @NamedQuery(name = "Buses.findByName", query = "SELECT b FROM Buses b WHERE b.name = :name"),
     @NamedQuery(name = "Buses.findByImage", query = "SELECT b FROM Buses b WHERE b.image = :image"),
-    @NamedQuery(name = "Buses.findByCreatedatetime", query = "SELECT b FROM Buses b WHERE b.createdatetime = :createdatetime")})
+    @NamedQuery(name = "Buses.findByActive", query = "SELECT b FROM Buses b WHERE b.active = :active"),
+    @NamedQuery(name = "Buses.findByCreateAt", query = "SELECT b FROM Buses b WHERE b.createAt = :createAt")})
 public class Buses implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "bid")
-    private Integer bid;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 64)
-    @Column(name = "BusesName")
-    private String busesName;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "driverID")
-    private int driverID;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "Bstatus")
-    private boolean bstatus;
-    @Size(max = 500)
+    @Column(name = "id")
+    private Integer id;
+    @Size(max = 45)
+    @Column(name = "name")
+    private String name;
+    @Size(max = 200)
     @Column(name = "image")
     private String image;
-    @Column(name = "createdatetime")
+    @Column(name = "active")
+    private Short active;
+    @Column(name = "create_at")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdatetime;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "busesId")
+    private Date createAt;
+    @OneToMany(mappedBy = "busId")
     @JsonIgnore
-    private Collection<Ticket> ticketCollection;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "busesId")
+    private Collection<RouteBus> routeBusCollection;
+    @JoinColumn(name = "garage_id", referencedColumnName = "id")
+    @ManyToOne
     @JsonIgnore
-    private Collection<Busesstatus> busesstatusCollection;
-    @JoinColumn(name = "loaixeID", referencedColumnName = "lid")
-    @ManyToOne(optional = false)
+    private Garage garageId;
+    @JoinColumn(name = "type_of_bus_id", referencedColumnName = "id")
+    @ManyToOne
     @JsonIgnore
-    private Plxe loaixeID;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "busesId")
+    private TypeOfBus typeOfBusId;
+    @JoinColumn(name = "driver_id", referencedColumnName = "id")
+    @ManyToOne
     @JsonIgnore
-    private Collection<Routebuses> routebusesCollection;
+    private User driverId;
 
     public Buses() {
     }
 
-    public Buses(Integer bid) {
-        this.bid = bid;
+    public Buses(Integer id) {
+        this.id = id;
     }
 
-    public Buses(Integer bid, String busesName, int driverID, boolean bstatus) {
-        this.bid = bid;
-        this.busesName = busesName;
-        this.driverID = driverID;
-        this.bstatus = bstatus;
+    public Integer getId() {
+        return id;
     }
 
-    public Integer getBid() {
-        return bid;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setBid(Integer bid) {
-        this.bid = bid;
+    public String getName() {
+        return name;
     }
 
-    public String getBusesName() {
-        return busesName;
-    }
-
-    public void setBusesName(String busesName) {
-        this.busesName = busesName;
-    }
-
-    public int getDriverID() {
-        return driverID;
-    }
-
-    public void setDriverID(int driverID) {
-        this.driverID = driverID;
-    }
-
-    public boolean getBstatus() {
-        return bstatus;
-    }
-
-    public void setBstatus(boolean bstatus) {
-        this.bstatus = bstatus;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getImage() {
@@ -138,54 +106,59 @@ public class Buses implements Serializable {
         this.image = image;
     }
 
-    public Date getCreatedatetime() {
-        return createdatetime;
+    public Short getActive() {
+        return active;
     }
 
-    public void setCreatedatetime(Date createdatetime) {
-        this.createdatetime = createdatetime;
+    public void setActive(Short active) {
+        this.active = active;
     }
 
-
-    @XmlTransient
-    public Collection<Ticket> getTicketCollection() {
-        return ticketCollection;
+    public Date getCreateAt() {
+        return createAt;
     }
 
-    public void setTicketCollection(Collection<Ticket> ticketCollection) {
-        this.ticketCollection = ticketCollection;
-    }
-
-    @XmlTransient
-    public Collection<Busesstatus> getBusesstatusCollection() {
-        return busesstatusCollection;
-    }
-
-    public void setBusesstatusCollection(Collection<Busesstatus> busesstatusCollection) {
-        this.busesstatusCollection = busesstatusCollection;
-    }
-
-    public Plxe getLoaixeID() {
-        return loaixeID;
-    }
-
-    public void setLoaixeID(Plxe loaixeID) {
-        this.loaixeID = loaixeID;
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
     }
 
     @XmlTransient
-    public Collection<Routebuses> getRoutebusesCollection() {
-        return routebusesCollection;
+    public Collection<RouteBus> getRouteBusCollection() {
+        return routeBusCollection;
     }
 
-    public void setRoutebusesCollection(Collection<Routebuses> routebusesCollection) {
-        this.routebusesCollection = routebusesCollection;
+    public void setRouteBusCollection(Collection<RouteBus> routeBusCollection) {
+        this.routeBusCollection = routeBusCollection;
+    }
+
+    public Garage getGarageId() {
+        return garageId;
+    }
+
+    public void setGarageId(Garage garageId) {
+        this.garageId = garageId;
+    }
+
+    public TypeOfBus getTypeOfBusId() {
+        return typeOfBusId;
+    }
+
+    public void setTypeOfBusId(TypeOfBus typeOfBusId) {
+        this.typeOfBusId = typeOfBusId;
+    }
+
+    public User getDriverId() {
+        return driverId;
+    }
+
+    public void setDriverId(User driverId) {
+        this.driverId = driverId;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (bid != null ? bid.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -196,7 +169,7 @@ public class Buses implements Serializable {
             return false;
         }
         Buses other = (Buses) object;
-        if ((this.bid == null && other.bid != null) || (this.bid != null && !this.bid.equals(other.bid))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -204,7 +177,7 @@ public class Buses implements Serializable {
 
     @Override
     public String toString() {
-        return "com.uav.pojo.Buses[ bid=" + bid + " ]";
+        return "com.uav.pojo.Buses[ id=" + id + " ]";
     }
     
 }

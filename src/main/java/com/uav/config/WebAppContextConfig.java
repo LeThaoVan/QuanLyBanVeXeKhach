@@ -6,11 +6,9 @@ package com.uav.config;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.uav.formatter.BusesFormatter;
-import com.uav.formatter.PlxeFormatter;
 import com.uav.formatter.ProviceFormatter;
 import com.uav.formatter.RouteFormatter;
-import com.uav.formatter.TramFormatter;
+import com.uav.formatter.TypeOfBusFormatter;
 import com.uav.formatter.UserFormatter;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -39,8 +37,8 @@ import org.springframework.web.servlet.view.JstlView;
 @ComponentScan(basePackages = {
     "com.uav.controllers",
     "com.uav.repository",
-    "com.uav.service",
-    "com.uav.validator"
+    "com.uav.service"
+    //"com.uav.validator"
 })
 public class WebAppContextConfig implements WebMvcConfigurer {
 
@@ -53,7 +51,6 @@ public class WebAppContextConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/js/**").addResourceLocations("/resources/js/");
         registry.addResourceHandler("/css/**").addResourceLocations("/resources/css/");
-        registry.addResourceHandler("/image/**").addResourceLocations("/resources/images/");
     }
 
     @Bean
@@ -80,11 +77,9 @@ public class WebAppContextConfig implements WebMvcConfigurer {
     @Override
     public void addFormatters(FormatterRegistry r) {
         r.addFormatter(new RouteFormatter());
-        r.addFormatter(new PlxeFormatter());
         r.addFormatter(new UserFormatter());
-        r.addFormatter(new BusesFormatter());
         r.addFormatter(new ProviceFormatter());
-        r.addFormatter(new TramFormatter());
+        r.addFormatter(new TypeOfBusFormatter());
     }
     
     

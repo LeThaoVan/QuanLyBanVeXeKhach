@@ -5,20 +5,16 @@
 package com.uav.pojo;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -32,28 +28,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Comment.findAll", query = "SELECT c FROM Comment c"),
     @NamedQuery(name = "Comment.findById", query = "SELECT c FROM Comment c WHERE c.id = :id"),
-    @NamedQuery(name = "Comment.findByContext", query = "SELECT c FROM Comment c WHERE c.context = :context"),
-    @NamedQuery(name = "Comment.findByCreatdatetime", query = "SELECT c FROM Comment c WHERE c.creatdatetime = :creatdatetime")})
+    @NamedQuery(name = "Comment.findByContext", query = "SELECT c FROM Comment c WHERE c.context = :context")})
 public class Comment implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
+    @NotNull
     @Column(name = "id")
     private Integer id;
-    @Size(max = 225)
+    @Size(max = 100)
     @Column(name = "context")
     private String context;
-    @Column(name = "creatdatetime")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date creatdatetime;
-    @JoinColumn(name = "bid", referencedColumnName = "rbid")
-    @ManyToOne(optional = false)
-    private Routebuses bid;
-    @JoinColumn(name = "userid", referencedColumnName = "userid")
-    @ManyToOne(optional = false)
-    private Users userid;
+    @JoinColumn(name = "route_bus_id", referencedColumnName = "id")
+    @ManyToOne
+    private RouteBus routeBusId;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @ManyToOne
+    private User userId;
 
     public Comment() {
     }
@@ -78,28 +70,20 @@ public class Comment implements Serializable {
         this.context = context;
     }
 
-    public Date getCreatdatetime() {
-        return creatdatetime;
+    public RouteBus getRouteBusId() {
+        return routeBusId;
     }
 
-    public void setCreatdatetime(Date creatdatetime) {
-        this.creatdatetime = creatdatetime;
+    public void setRouteBusId(RouteBus routeBusId) {
+        this.routeBusId = routeBusId;
     }
 
-    public Routebuses getBid() {
-        return bid;
+    public User getUserId() {
+        return userId;
     }
 
-    public void setBid(Routebuses bid) {
-        this.bid = bid;
-    }
-
-    public Users getUserid() {
-        return userid;
-    }
-
-    public void setUserid(Users userid) {
-        this.userid = userid;
+    public void setUserId(User userId) {
+        this.userId = userId;
     }
 
     @Override

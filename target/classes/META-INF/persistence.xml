@@ -16,6 +16,24 @@
     <class>com.uav.pojo.Routestation</class>
     <class>com.uav.pojo.Tram</class>
     <class>com.uav.pojo.Comment</class>
+    <class>com.uav.pojo.GarageBus</class>
+    <class>com.uav.pojo.DiscountTicket</class>
+    <class>com.uav.pojo.DepartureTime</class>
+    <class>com.uav.pojo.RouteBus</class>
+    <class>com.uav.pojo.Station</class>
+    <class>com.uav.pojo.TicketChair</class>
+    <class>com.uav.pojo.Discount</class>
+    <class>com.uav.pojo.RouteStation</class>
+    <class>com.uav.pojo.Bus</class>
+    <class>com.uav.pojo.User</class>
+    <class>com.uav.pojo.Project</class>
+    <class>com.uav.pojo.Garage</class>
+    <class>com.uav.pojo.TimeSlot</class>
+    <class>com.uav.pojo.RouteBusStation</class>
+    <class>com.uav.pojo.TypeOfBus</class>
+    <class>com.uav.pojo.Street</class>
+    <class>com.uav.pojo.Star</class>
+    <class>com.uav.pojo.RouteBusDepartureTime</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/qlbenxe?zeroDateTimeBehavior=CONVERT_TO_NULL"/>

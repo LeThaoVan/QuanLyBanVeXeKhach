@@ -4,14 +4,11 @@
  */
 package com.uav.controllers;
 
+
 import com.uav.pojo.Buses;
-import com.uav.pojo.Route;
-import com.uav.pojo.Routebuses;
-import com.uav.pojo.Tram;
-import com.uav.service.BusesService;
-import com.uav.service.RouteBusesService;
-import com.uav.service.RouteService;
-import com.uav.service.TramService;
+import com.uav.pojo.Garage;
+import com.uav.service.BusService;
+import com.uav.service.GarageService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,55 +22,38 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author admin
+ * @author pc
  */
 @RestController
 @RequestMapping("/api")
 public class ApiController {
-    @Autowired
-    private BusesService busesService;
+     @Autowired
+    private BusService busesService;
     
-    @Autowired
-    private RouteService routeService;
-    
-    @Autowired
-    private RouteBusesService routebusesService;
-    
-      @Autowired
-    private TramService tramService;
-
-    //API BUSES
+     @Autowired
+    private GarageService garageService;
+     
     @GetMapping("/buses")
     public ResponseEntity<List<Buses>> list() {
-        return new ResponseEntity<>(this.busesService.getBuses(null, 0), HttpStatus.OK);
+        return new ResponseEntity<>(this.busesService.getBus(), HttpStatus.OK);
     }
     
-    @DeleteMapping("/buses/{bid}")
+  
+    
+    @DeleteMapping("/buses/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable(value = "bid") int id) {
-        this.busesService.deleteBuses(id);
+    public void delete(@PathVariable(value = "id") int id) {
+        this.busesService.deleteBus(id);
     }
     
-    // API ROUTEBUSES
-    @GetMapping("/routebuses")
-    public ResponseEntity<List<Routebuses>> list2() {
-        return new ResponseEntity<>(this.routebusesService.getRouteBuses(null, 0,0), HttpStatus.OK);
+    @GetMapping("/garage")
+    public ResponseEntity<List<Garage>> listGara() {
+        return new ResponseEntity<>(this.garageService.getGarage(), HttpStatus.OK);
     }
-     
-    @DeleteMapping("/routebuses/{rbid}")
+    
+    @DeleteMapping("/garage/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete2(@PathVariable(value = "rbid") int id) {
-        this.routebusesService.deleteRBuses(id);
+    public void deleteGara(@PathVariable(value = "id") int id) {
+        this.busesService.deleteBus(id);
     }
- // API Tram
-    @GetMapping("/tram")
-    public ResponseEntity<List<Tram>> list3() {
-        return new ResponseEntity<>(this.tramService.getTram(null), HttpStatus.OK);
-    }
-     
-    @DeleteMapping("/tram/{idtram}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete3(@PathVariable(value = "idtram") int id) {
-        this.tramService.deleteTram(id);
-    }   
 }

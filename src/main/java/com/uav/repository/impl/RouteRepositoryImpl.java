@@ -50,13 +50,13 @@ public class RouteRepositoryImpl implements RouteRepository {
 
             String kw = params.get("kw");
             if (kw != null && !kw.isEmpty()) {
-                Predicate p = b.like(root.get("routename").as(String.class),
+                Predicate p = b.like(root.get("name").as(String.class),
                         String.format("%%%s%%", kw));
                 predicates.add(p);
             }
             String st = params.get("st");
             if (st != null && !st.isEmpty()) {
-                Predicate p = b.equal(root.get("startingpoint"), Integer.parseInt(st));
+                Predicate p = b.equal(root.get("startProvince"), Integer.parseInt(st));
                 predicates.add(p);
             }
              String st2 = params.get("st2");
@@ -69,7 +69,7 @@ public class RouteRepositoryImpl implements RouteRepository {
 
         }
 
-        q.orderBy(b.desc(root.get("rid")), b.desc(root.get("routename")), b.desc(root.get("startingpoint")), b.desc(root.get("destination")));
+        q.orderBy(b.desc(root.get("id")), b.desc(root.get("name")));
 
         Query query = session.createQuery(q);
         if (page > 0) {

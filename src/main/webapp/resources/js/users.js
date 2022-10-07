@@ -4,6 +4,8 @@
  */
 
 
+
+
 function deleteUsers(endpoint, id, btn) {
     let r = document.getElementById(`row${id}`);
     let load = document.getElementById(`load${id}`);
@@ -33,25 +35,25 @@ function getUsers(endpoint) {
             let h = "";
             for (let i = 0; i < data.length; i++)
                 h += `
-                  <tr id="row${data[i].userid}">
-                      <td>${data[i].userid}</td>
+                  <tr id="row${data[i].id}">
+                      <td>${data[i].id}</td>
                       <td><img src="${data[i].avata}" width="120" /></td>
-                      <td>${data[i].username}</td>
-                       <td>${data[i].firstname}</td>
-                       <td>${data[i].lastname}</td>
+                      <td>${data[i].userName}</td>
+                       <td>${data[i].firstName}</td>
+                       <td>${data[i].lastName}</td>
                        <td>${data[i].email}</td>
                        <td>${data[i].sdt}</td>
-                       <td>${data[i].rode}</td>
+                       <td>${data[i].role}</td>
                         <td>
-                        <div class="spinner-border text-info" style="display:none" id="load${data[i].bid}"></div>
-                        <button class="btn btn-danger" onclick="deleteUsers('${endpoint + "/" + data[i].userid}', ${data[i].userid}, this)">Xóa</button>
+                        <div class="spinner-border text-info" style="display:none" id="load${data[i].id}"></div>
+                        <button class="btn btn-danger" onclick="deleteUsers('${endpoint + "/" + data[i].id}', ${data[i].id}, this)">Xóa</button>
                     </td>
                   </tr>
               `
             d.innerHTML = h;
         }
 
-        let d2 = document.getElementById("mySpinner");
+        let d2 = document.getElemenByItd("mySpinner");
         d2.style.display = "none";
     }).catch(function (err) {
         console.error(err);

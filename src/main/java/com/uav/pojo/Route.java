@@ -8,21 +8,17 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -36,9 +32,11 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Route.findAll", query = "SELECT r FROM Route r"),
-    @NamedQuery(name = "Route.findByRid", query = "SELECT r FROM Route r WHERE r.rid = :rid"),
-    @NamedQuery(name = "Route.findByRoutename", query = "SELECT r FROM Route r WHERE r.routename = :routename"),
-    @NamedQuery(name = "Route.findByCreatedatetime", query = "SELECT r FROM Route r WHERE r.createdatetime = :createdatetime"),
+    @NamedQuery(name = "Route.findById", query = "SELECT r FROM Route r WHERE r.id = :id"),
+    @NamedQuery(name = "Route.findByName", query = "SELECT r FROM Route r WHERE r.name = :name"),
+    @NamedQuery(name = "Route.findByStartProvince", query = "SELECT r FROM Route r WHERE r.startProvince = :startProvince"),
+    @NamedQuery(name = "Route.findByDestination", query = "SELECT r FROM Route r WHERE r.destination = :destination"),
+    @NamedQuery(name = "Route.findByCreateAt", query = "SELECT r FROM Route r WHERE r.createAt = :createAt"),
     @NamedQuery(name = "Route.findByImage", query = "SELECT r FROM Route r WHERE r.image = :image")})
 public class Route implements Serializable {
 
@@ -46,64 +44,71 @@ public class Route implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "rid")
-    private Integer rid;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "routename")
-    private String routename;
-    @Column(name = "createdatetime")
+    @Column(name = "id")
+    private Integer id;
+    @Size(max = 45)
+    @Column(name = "name")
+    private String name;
+    @Column(name = "start_province")
+    private Integer startProvince;
+    @Column(name = "destination")
+    private Integer destination;
+    @Column(name = "create_at")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdatetime;
-    @Size(max = 500)
+    private Date createAt;
+    @Size(max = 100)
     @Column(name = "image")
     private String image;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "routeId")
-    private Collection<Routestation> routestationCollection;
-    @JoinColumn(name = "destination", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Province destination;
-    @JoinColumn(name = "startingpoint", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private Province startingpoint;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "routeId")
-    private Collection<Routebuses> routebusesCollection;
+    @OneToMany(mappedBy = "routeId")
+    private Collection<RouteBus> routeBusCollection;
+    @OneToMany(mappedBy = "routeId")
+    private Collection<RouteStation> routeStationCollection;
 
     public Route() {
     }
 
-    public Route(Integer rid) {
-        this.rid = rid;
+    public Route(Integer id) {
+        this.id = id;
     }
 
-    public Route(Integer rid, String routename) {
-        this.rid = rid;
-        this.routename = routename;
+    public Integer getId() {
+        return id;
     }
 
-    public Integer getRid() {
-        return rid;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setRid(Integer rid) {
-        this.rid = rid;
+    public String getName() {
+        return name;
     }
 
-    public String getRoutename() {
-        return routename;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setRoutename(String routename) {
-        this.routename = routename;
+    public Integer getStartProvince() {
+        return startProvince;
     }
 
-    public Date getCreatedatetime() {
-        return createdatetime;
+    public void setStartProvince(Integer startProvince) {
+        this.startProvince = startProvince;
     }
 
-    public void setCreatedatetime(Date createdatetime) {
-        this.createdatetime = createdatetime;
+    public Integer getDestination() {
+        return destination;
+    }
+
+    public void setDestination(Integer destination) {
+        this.destination = destination;
+    }
+
+    public Date getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Date createAt) {
+        this.createAt = createAt;
     }
 
     public String getImage() {
@@ -115,43 +120,27 @@ public class Route implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Routestation> getRoutestationCollection() {
-        return routestationCollection;
+    public Collection<RouteBus> getRouteBusCollection() {
+        return routeBusCollection;
     }
 
-    public void setRoutestationCollection(Collection<Routestation> routestationCollection) {
-        this.routestationCollection = routestationCollection;
-    }
-
-    public Province getDestination() {
-        return destination;
-    }
-
-    public void setDestination(Province destination) {
-        this.destination = destination;
-    }
-
-    public Province getStartingpoint() {
-        return startingpoint;
-    }
-
-    public void setStartingpoint(Province startingpoint) {
-        this.startingpoint = startingpoint;
+    public void setRouteBusCollection(Collection<RouteBus> routeBusCollection) {
+        this.routeBusCollection = routeBusCollection;
     }
 
     @XmlTransient
-    public Collection<Routebuses> getRoutebusesCollection() {
-        return routebusesCollection;
+    public Collection<RouteStation> getRouteStationCollection() {
+        return routeStationCollection;
     }
 
-    public void setRoutebusesCollection(Collection<Routebuses> routebusesCollection) {
-        this.routebusesCollection = routebusesCollection;
+    public void setRouteStationCollection(Collection<RouteStation> routeStationCollection) {
+        this.routeStationCollection = routeStationCollection;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (rid != null ? rid.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -162,7 +151,7 @@ public class Route implements Serializable {
             return false;
         }
         Route other = (Route) object;
-        if ((this.rid == null && other.rid != null) || (this.rid != null && !this.rid.equals(other.rid))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -170,7 +159,7 @@ public class Route implements Serializable {
 
     @Override
     public String toString() {
-        return "com.uav.pojo.Route[ rid=" + rid + " ]";
+        return "com.uav.pojo.Route[ id=" + id + " ]";
     }
     
 }
